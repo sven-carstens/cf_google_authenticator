@@ -12,6 +12,7 @@ namespace CodeFareith\CfGoogleAuthenticator\Tests\Unit\Utility;
 
 use CodeFareith\CfGoogleAuthenticator\Tests\Unit\BaseTestCase;
 use CodeFareith\CfGoogleAuthenticator\Utility\PathUtility;
+use PHPUnit\Runner\Version;
 
 class PathUtilityTest extends BaseTestCase
 {
@@ -30,7 +31,11 @@ class PathUtilityTest extends BaseTestCase
         $actualPath = PathUtility::makePath($firstSegment, $secondSegment, $thirdSegment);
 
         static::assertStringStartsWith($firstSegment, $actualPath);
-        static::assertContains($secondSegment, $actualPath);
+        if (version_compare(Version::id(), '7.0', '>=')) {
+            static::assertStringContainsString($secondSegment, $actualPath);
+        } else {
+            static::assertContains($secondSegment, $actualPath);
+        }
         static::assertStringEndsWith($thirdSegment, $actualPath);
     }
 
@@ -49,7 +54,11 @@ class PathUtilityTest extends BaseTestCase
         $actualPath = PathUtility::makePath($firstSegment, $secondSegment, $thirdSegment);
 
         static::assertStringStartsNotWith('/', $actualPath);
-        static::assertContains($secondSegment, $actualPath);
+        if (version_compare(Version::id(), '7.0', '>=')) {
+            static::assertStringContainsString($secondSegment, $actualPath);
+        } else {
+            static::assertContains($secondSegment, $actualPath);
+        }
         static::assertStringEndsNotWith('/', $actualPath);
     }
 
@@ -118,10 +127,17 @@ class PathUtilityTest extends BaseTestCase
             'LLL:EXT:',
             $actualPath
         );
-        static::assertContains(
-            PathUtility::$languageDirectoryPath,
-            $actualPath
-        );
+        if (version_compare(Version::id(), '7.0', '>=')) {
+            static::assertStringContainsString(
+                PathUtility::$languageDirectoryPath,
+                $actualPath
+            );
+        } else {
+            static::assertContains(
+                PathUtility::$languageDirectoryPath,
+                $actualPath
+            );
+        }
         static::assertStringEndsWith(
             $file . ':' . $id,
             $actualPath

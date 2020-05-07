@@ -13,6 +13,7 @@ namespace CodeFareith\CfGoogleAuthenticator\Tests\Unit\Domain\Immutable;
 use CodeFareith\CfGoogleAuthenticator\Domain\Immutable\AuthenticationSecret;
 use CodeFareith\CfGoogleAuthenticator\Tests\Unit\BaseTestCase;
 use InvalidArgumentException;
+use PHPUnit\Runner\Version;
 
 class AuthenticationSecretTest extends BaseTestCase
 {
@@ -124,22 +125,42 @@ class AuthenticationSecretTest extends BaseTestCase
             $issuer,
             $uri
         );
-        static::assertContains(
-            'issuer',
-            $uri
-        );
-        static::assertContains(
-            $issuer,
-            $uri
-        );
-        static::assertContains(
-            'secret',
-            $uri
-        );
-        static::assertContains(
-            $secretKey,
-            $uri
-        );
+
+        if (version_compare(Version::id(), '7.0', '>=')) {
+            static::assertStringContainsString(
+                'issuer',
+                $uri
+            );
+            static::assertStringContainsString(
+                $issuer,
+                $uri
+            );
+            static::assertStringContainsString(
+                'secret',
+                $uri
+            );
+            static::assertStringContainsString(
+                $secretKey,
+                $uri
+            );
+        } else {
+            static::assertContains(
+                'issuer',
+                $uri
+            );
+            static::assertContains(
+                $issuer,
+                $uri
+            );
+            static::assertContains(
+                'secret',
+                $uri
+            );
+            static::assertContains(
+                $secretKey,
+                $uri
+            );
+        }
         static::assertStringMatchesFormat(
             '%s?%s',
             $uri
