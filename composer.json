@@ -46,6 +46,7 @@
     "rss": "https://github.com/codeFareith/cf_google_authenticator/commits/master.atom"
   },
   "require": {
+    "php": "^7.1",
     "typo3/cms-core": "^8.7 || ^9.5 || ^10.4",
     "typo3/cms-reports": "^8.7 || ^9.5 || ^10.4",
     "typo3/cms-setup": "^8.7 || ^9.5 || ^10.4",
@@ -87,10 +88,7 @@
   "repositories": {},
   "config": {
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin",
-    "platform": {
-      "php": "^7.1"
-    }
+    "bin-dir": ".Build/bin"
   },
   "scripts": {
     "post-autoload-dump": [
